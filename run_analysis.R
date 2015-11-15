@@ -19,9 +19,7 @@ library(dplyr)
   #Function to retrieve header names for measurements
   getMeasurementNames<-function(){
     measureHeader <- read.table("UCI HAR Dataset/features.txt")
-    colnames(measureHeader) <- c("Index","MeasuremeantName")
-    measureHeader<-gsub("[()]","", measureHeader$MeasuremeantName)
-    measureHeader<-gsub(",","-", measureHeader)
+    colnames(measureHeader) <- c("Index","MeasurementName")
     measureHeader
   }
   
@@ -35,7 +33,7 @@ library(dplyr)
     colnames(activity_test) <- "ActivityId"
     
     measurements_test <- read.table("UCI HAR Dataset/test/X_test.txt")
-    colnames(measurements_test) <- measureHeader
+    colnames(measurements_test) <- measureHeader$MeasurementName
     
     testfull <- cbind(subject_test, activity_test,measurements_test)
     rm(subject_test)
@@ -54,7 +52,7 @@ library(dplyr)
     colnames(activity_train) <- "ActivityId"
     
     measurements_train <- read.table("UCI HAR Dataset/train/X_train.txt")
-    colnames(measurements_train) <- measureHeader
+    colnames(measurements_train) <- measureHeader$MeasurementName
     
     trainfull <- cbind(subject_train, activity_train,measurements_train)
     rm(subject_train)
@@ -91,7 +89,7 @@ library(dplyr)
     
     #Select required columns together with subjectId and activityID
     mergedDataSet <- mergedDataSet  %>%
-      select(SubjectId, ActivityId, contains("mean"), contains("std")) %>%
+      select(SubjectId, ActivityId, contains("mean()"), contains("std()")) %>%
       arrange(SubjectId, ActivityId)
     
     mergedDataSet
@@ -114,7 +112,15 @@ library(dplyr)
   
 ##4. Appropriately labels the data set with descriptive variable names. 
   
-  #Namees have already been cleaned  as data was loaded.
+  cleanColumnName <- function(mergedDataSet){
+    measureHeader <- colnames(mergedDataSet)
+    measureHeader <- gsub("[()]","", measureHeader)
+    
+    colnames(mergedDataSet) <- measureHeader
+    
+    mergedDataSet
+  }
+  
   
   
 ##5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
@@ -132,6 +138,7 @@ library(dplyr)
 mergedDataSet <- generetedMergedDataSet()
 mergedDataSet <- extractMeasurements(mergedDataSet)
 mergedDataSet <- getActivityName(mergedDataSet)
-
+mergedDataSet <- cleanColumnName(mergedDataSet)
 summerizedDataSet <- getSummerisedDataSet(mergedDataSet)
+
 write.table(summerizedDataSet, row.names = F, file = "SummerizedOutput.txt")
