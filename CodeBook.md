@@ -23,6 +23,16 @@ The following transformation has been applied to obtain this dataset
 
 ###Variables
 
+####Subject
+- SubjectId (Subject labelled 1-30)
+
+####Activity
+- ActivityId (Activity lablled 1-6)
+- ActivityName (Corresponding activity name)
+
+####Measurements
+- Measurements are labelled in a fixed format "(measurement type)-(mean/std)-(Axis if applicable)"
+- For example "tBodyAcc-std-Z", indicates that the measurement is of a standardDeviation of the tBodyAcc in the Z axis.
 
 ## SummerisedDataSet
 
@@ -33,4 +43,15 @@ The following transformation has been applied to the mergedDataSet to obtain thi
 3. Order the data by SubjectId and ActivityId.
  
 ###Variables
-- ActivityId tBodyAcc
+
+####Subject
+- SubjectId (Subject labelled 1-30)
+
+####Activity
+- ActivityId (Activity lablled 1-6)
+- ActivityName (Corresponding activity name)
+
+####Measurements
+- Measures are all means of the labelled measurements grouped by the subject and activity.
+- Measurements are labelled in a fixed format "(measurement type)-(mean/std)-(Axis if applicable)"
+- For example "tBodyAcc-std-Z", indicates that the measurement is of a mean of the standardDeviation of the tBodyAcc in the Z axis for a given subject and actitvity.
