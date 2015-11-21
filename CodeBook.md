@@ -30,7 +30,7 @@ The following transformation has been applied to obtain this dataset
 - ActivityId (Activity lablled 1-6)
 - ActivityName (Corresponding activity name)
 
-#### 1.1.23 Measurements
+#### 1.1.2.3 Measurements
 - Measurements are labelled in a fixed format "(measurement type)-(mean/std)-(Axis if applicable)"
 - For example "tBodyAcc-std-Z", indicates that the measurement is of a standardDeviation of the tBodyAcc in the Z axis.
 
